@@ -38,22 +38,20 @@
 
 <p>This project does not pretend to be 'state of the art',
 was written in few hours to help to troubleshoot applications where is not possible to access to log file easily.
-It allow you to temporarly enable database logging and change/add logging level and loggers using django admin interface.</p>
+It allow you to temporally enable database logging and change/add logging level and loggers using django admin interface.</p>
 
 <p>Thanks to Joeri Bekker for the <a href="https://github.com/joeribekker/django-logdb">https://github.com/joeribekker/django-logdb</a> application
 from which the database logging part of this package was taken.</p>
 
-<p>.. note:: Only tested on Django 1.7</p>
+<p><strong>note</strong>:: Only tested on Django 1.7</p>
 
 <h2>
 <a name="quick-installation" class="anchor" href="#quick-installation"><span class="octicon octicon-link"></span></a>Quick Installation</h2>
 
-<p>::</p>
-
 <p>pip install django-live-logging</p>
 
 <p>Once installed, update your Django <code>settings.py</code> and add <code>live_logging</code> to your
-INSTALLED_APPS::</p>
+INSTALLED_APPS</p>
 
 <pre><code>INSTALLED_APPS = (
     'django.contrib.admin',
@@ -68,8 +66,7 @@ INSTALLED_APPS::</p>
 <h2>
 <a name="configure-database-logging" class="anchor" href="#configure-database-logging"><span class="octicon octicon-link"></span></a>Configure Database logging</h2>
 
-<p>Create an handler in your logging configuration to store into database.
-::</p>
+<p>Create an handler in your logging configuration to store into database.</p>
 
 <pre><code>LOGGING = {
     ...
