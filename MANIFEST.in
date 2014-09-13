@@ -1,4 +1,4 @@
-include README
+include README.rst
 include CHANGES
 include MANIFEST.in
 recursive-include docs *
