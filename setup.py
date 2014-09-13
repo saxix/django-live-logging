@@ -17,7 +17,7 @@ setup(
     name=app.NAME,
     version=app.get_version(),
     description='Live django logging configuration, monitoring and displaying',
-    long_description=read("README"),
+    long_description=read("README.rst"),
     packages=find_packages('.'),
     include_package_data=True,
     platforms=['linux'],
