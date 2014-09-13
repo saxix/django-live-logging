@@ -1,0 +1,12 @@
+{% extends "admin/live_logging/change_list.html" %}{% load i18n admin_urls admin_static admin_list %}
+
+{% block object-tools-items %}
+{#    {{ block.super }}#}
+
+        {% url cl.opts|admin_urlname:'test' as test_url %}
+        <a href="{% add_preserved_filters test_url is_popup %}" class="btn btn-success">
+            <i class="icon-refresh icon-white"></i>&nbsp;
+            {% blocktrans with cl.opts.verbose_name as name %}Emit Test logging{% endblocktrans %}
+        </a>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+*.egg-info
+*.pyc
+*.pyo
+*.sqlite
+*.~*
+*credentials.*
+.cache
+.coverage
+.idea
+.tox
+/dist
+/build
+pytest.xml
+~*
