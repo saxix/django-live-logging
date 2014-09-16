@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
 from django.conf import settings
-from .models import Handler, Formatter, Logger
 
 
 def tree():
@@ -26,6 +25,8 @@ def tree():
 
 
 def read_config():
+    from .models import Handler, Formatter, Logger
+
     for k, v in settings.LOGGING['formatters'].items():
         __, new = Formatter.objects.get_or_create(name=k, defaults=v)
 
@@ -46,4 +47,24 @@ def read_config():
                 lg.handlers.add(Handler.objects.get(name=h))
             lg.save()
 
+
+
+def get_test_logger(level):
+    from handlers import DjangoDatabaseHandler
+
+    formatter = logging.Formatter('%(asctime)-6s: %(name)s - %(levelname)s - %(message)s')
+    handler = DjangoDatabaseHandler(level)
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger("test-logging")
+    logger.propagate = False
+
+    logger.addHandler(handler)
+    logger.setLevel(level)
+    return logger
+
+
+def logdb(msg, level=logging.DEBUG):
+    logger = get_test_logger(level)
+    logger.log(level, msg)
 

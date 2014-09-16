@@ -8,7 +8,7 @@ from functools import update_wrapper
 from django.conf.urls import patterns
 from django.contrib.admin import site
 from live_logging.handlers import DjangoDatabaseHandler
-from live_logging.utils import read_config
+from live_logging.utils import read_config, get_test_logger
 from .models import LogEntry, Formatter, Handler, Logger, apply_config
 from django.contrib import admin
 
@@ -56,16 +56,7 @@ class LogEntryAdmin(admin.ModelAdmin):
                             name='%s_%s_test' % info), ) + original
 
     def _get_test_logger(self):
-        formatter = logging.Formatter('%(asctime)-6s: %(name)s - %(levelname)s - %(message)s')
-        handler = DjangoDatabaseHandler(logging.DEBUG)
-        handler.setFormatter(formatter)
-
-        test_logger = logging.getLogger("test-logging")
-        test_logger.propagate = False
-
-        test_logger.addHandler(handler)
-        test_logger.setLevel(logging.DEBUG)
-        return test_logger
+        return get_test_logger(logging.DEBUG)
 
     def log_test(self, request):
         test_logger = self._get_test_logger()

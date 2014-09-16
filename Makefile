@@ -1,3 +1,8 @@
+BUILDDIR='./~build'
+
+mkbuilddir:
+	mkdir -p ${BUILDDIR}
+
 clean:
 	# cleaning
 	@rm -rf ${BUILDDIR} dist *.egg-info .coverage .pytest MEDIA_ROOT MANIFEST .cache *.egg build STATIC
