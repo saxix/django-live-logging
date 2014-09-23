@@ -43,6 +43,16 @@ class JSONField(models.TextField):
         value = json.dumps(value, cls=DjangoJSONEncoder)
         return super(JSONField, self).get_db_prep_save(value, connection=connection)
 
+    def south_field_triple(self):
+        "Returns a suitable description of this field for South."
+        # We'll just introspect the _actual_ field.
+        from south.modelsinspector import introspector
+
+        field_class = 'live_logging.fields.JSONField'
+        args, kwargs = introspector('JSONField')
+        # That's our definition!
+        return (field_class, args, kwargs)
+
 
 class TupleField(models.TextField):
     __metaclass__ = models.SubfieldBase
@@ -66,6 +76,16 @@ class TupleField(models.TextField):
         value = json.dumps(value, cls=DjangoJSONEncoder)
         return super(TupleField, self).get_db_prep_save(value, connection=connection)
 
+    def south_field_triple(self):
+        "Returns a suitable description of this field for South."
+        # We'll just introspect the _actual_ field.
+        from south.modelsinspector import introspector
+
+        field_class = 'live_logging.fields.TupleField'
+        args, kwargs = introspector('TupleField')
+        # That's our definition!
+        return (field_class, args, kwargs)
+
 
 class LogLevelField(models.IntegerField):
     def __init__(self, verbose_name=None, name=None, primary_key=False, max_length=None, unique=False, blank=False,
@@ -82,3 +102,13 @@ class LogLevelField(models.IntegerField):
                                             rel, default, editable, serialize, unique_for_date, unique_for_month,
                                             unique_for_year, choices, help_text, db_column, db_tablespace, auto_created,
                                             validators, error_messages)
+
+    def south_field_triple(self):
+        "Returns a suitable description of this field for South."
+        # We'll just introspect the _actual_ field.
+        from south.modelsinspector import introspector
+
+        field_class = 'live_logging.fields.LogLevelField'
+        args, kwargs = introspector('LogLevelField')
+        # That's our definition!
+        return (field_class, args, kwargs)

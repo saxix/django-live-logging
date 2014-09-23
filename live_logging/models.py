@@ -1,7 +1,6 @@
 import logging
+import django
 from django.db import models
-
-from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
 from .fields import JSONField, TupleField
@@ -145,7 +144,8 @@ class LogEntry(BaseLogEntry):
 
     class Meta:
         verbose_name_plural = _('Log entries')
-        default_permissions =  ('delete', )
+        if django.VERSION >= (1,7):
+            default_permissions = ('delete', )
 
     def get_message(self):
         if not self.args:

@@ -27,17 +27,17 @@ def tree():
 def read_config():
     from .models import Handler, Formatter, Logger
 
-    for k, v in settings.LOGGING['formatters'].items():
+    for k, v in settings.LOGGING.get('formatters', {}).items():
         __, new = Formatter.objects.get_or_create(name=k, defaults=v)
 
-    for k, v in settings.LOGGING['handlers'].items():
+    for k, v in settings.LOGGING.get('handlers', {}).items():
         __, new = Handler.objects.get_or_create(name=k, defaults={
             'level': logging._levelNames.get(v['level'], 'NOTSET'),
             'handler': v.get('class', ''),
             'formatter': Formatter.objects.get_or_create(name=v.get('formatter', 'simple'), defaults={'format': ''})[0]
         })
 
-    for k, v in settings.LOGGING['loggers'].items():
+    for k, v in settings.LOGGING.get('loggers', {}).items():
         lg, new = Logger.objects.get_or_create(name=k, defaults={
             'level': logging._levelNames.get(v['level'], logging.NOTSET),
             'propagate': v.get('propagate', False),

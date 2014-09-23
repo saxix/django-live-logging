@@ -9,7 +9,7 @@ SOUTH_ERROR_MESSAGE = """\n
 For South support, customize the SOUTH_MIGRATION_MODULES setting like so:
 
     SOUTH_MIGRATION_MODULES = {
-        'project_settings': 'project_settings.south_migrations',
+        'live_logging': 'live_logging.south_migrations',
     }
 """
 
