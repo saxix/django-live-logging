@@ -41,7 +41,6 @@ LOG_RECORD_RESERVED_ATTRS = (
 
 
 class LogManager(models.Manager):
-
     def _get_extra(self, record):
         """
         Get the extra fields by filtering out the known reserved fields.
@@ -144,7 +143,7 @@ class LogEntry(BaseLogEntry):
 
     class Meta:
         verbose_name_plural = _('Log entries')
-        if django.VERSION >= (1,7):
+        if django.VERSION >= (1, 7):
             default_permissions = ('delete', )
 
     def get_message(self):
@@ -180,7 +179,6 @@ class Formatter(models.Model):
         return self.name
 
 
-
 class Handler(models.Model):
     name = models.CharField(max_length=100, unique=True)
     level = fields.LogLevelField()
@@ -209,21 +207,22 @@ class Logger(models.Model):
 
 def apply_config(limit_to=None):
     from django.conf import settings
-    limit_to = limit_to or [Formatter,Handler,Logger]
+
+    limit_to = limit_to or [Formatter, Handler, Logger]
     if Formatter in limit_to:
-        formatters = settings.LOGGING['formatters']
+        formatters = settings.LOGGING.get('formatters', [])
         for formatter in Formatter.objects.all():
             formatters[formatter.name]['format'] = formatter.format
 
     if Handler in limit_to:
-        handlers = settings.LOGGING['handlers']
+        handlers = settings.LOGGING.get('handlers', [])
         for handler in Handler.objects.all():
             handlers[handler.name]['level'] = handler.level
             # handlers[handler.name]['class'] = handler.handler
             handlers[handler.name]['formatter'] = handler.formatter.name
 
     if Logger in limit_to:
-        loggers = settings.LOGGING['loggers']
+        loggers = settings.LOGGING.get('loggers', [])
         for logger in Logger.objects.all():
             if logger.name not in loggers:
                 loggers[logger.name] = {}
