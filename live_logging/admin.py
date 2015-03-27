@@ -13,8 +13,6 @@ from .models import LogEntry, Formatter, Handler, Logger, apply_config
 from django.contrib import admin
 
 
-
-
 class LogEntryAdmin(admin.ModelAdmin):
     # change_form_template = 'admin/logging/error_form.html'
     list_display = (
@@ -66,6 +64,8 @@ class LogEntryAdmin(admin.ModelAdmin):
 
         cursor = connection.cursor()
         cursor.execute('TRUNCATE TABLE "{0}"'.format(LogEntry._meta.db_table))
+        info = self.model._meta.app_label, self.model._meta.model_name
+        return HttpResponseRedirect(reverse('admin:%s_%s_changelist' % info))
 
     def log_test(self, request):
         test_logger = self._get_test_logger()
