@@ -53,10 +53,19 @@ class LogEntryAdmin(admin.ModelAdmin):
         return patterns('',
                         url(r'^log-test/$',
                             wrap(self.log_test),
-                            name='%s_%s_test' % info), ) + original
+                            name='%s_%s_test' % info),
+                        url(r'^empty-log/$',
+                            wrap(self.empty_log),
+                            name='%s_%s_empty' % info)) + original
 
     def _get_test_logger(self):
         return get_test_logger(logging.DEBUG)
+
+    def empty_log(self, request):
+        from django.db import connection
+
+        cursor = connection.cursor()
+        cursor.execute('TRUNCATE TABLE "{0}"'.format(LogEntry._meta.db_table))
 
     def log_test(self, request):
         test_logger = self._get_test_logger()

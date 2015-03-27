@@ -9,4 +9,9 @@
             {% blocktrans with cl.opts.verbose_name as name %}Emit Test logging{% endblocktrans %}
         </a>
 
+        <a href="{% add_preserved_filters empty_url is_popup %}" class="btn btn-success">
+            <i class="icon-refresh icon-white"></i>&nbsp;
+            {% blocktrans with cl.opts.verbose_name as name %}Empty logs{% endblocktrans %}
+        </a>
+
 {% endblock %}
